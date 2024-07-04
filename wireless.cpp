@@ -1,9 +1,15 @@
-// #include "wireless.h"
-#include <esp_now.h>
-#include <WiFi.h>
-#include <esp_wifi.h>
+#include "wireless.h"
 
+// Structure to hold the MAC address and other info
+// typedef struct struct_message {
+//     char text[32];
+//     int value;
+// } struct_message;
+
+// MAC address of the receiver
+// uint8_t broadcastAddress[] = {0x84, 0xF7, 0x03, 0xF1, 0x1E, 0xDC};
 uint8_t broadcastAddress[] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
+// Callback when data is sent
 void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
     Serial.print("Last Packet Send Status:");
     if (status == ESP_NOW_SEND_SUCCESS) {
@@ -12,13 +18,9 @@ void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
         Serial.println("Delivery Fail");
     }
 }
-void setup() {
-    // Initialize Serial Monitor
-    Serial.begin(115200);
-    pinMode(18, INPUT_PULLUP);
-    delay(5000);
-    // initializeWireless();
-        Serial.println("Initialize ESP-NOW");
+
+void initializeWireless() {
+    Serial.println("Initialize ESP-NOW");
         // Set device as a Wi-Fi Station
     WiFi.mode(WIFI_STA);
     esp_wifi_set_max_tx_power(84);
@@ -45,11 +47,4 @@ void setup() {
 
     // Register callback function
     esp_now_register_send_cb(OnDataSent);
-
-
-}
-
-int value = 0;
-void loop() {
-
 }
