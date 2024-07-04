@@ -58,10 +58,10 @@ int value = 0;
 void loop() {
     if (digitalRead(18)) {
     //   value = 0x0000FF;
-    value = 0;
+    value = 1;
     } else {
     //   value = 0xFF0000;
-    value = 180;
+    value = 120;
     }
     // Sample message
     struct_message myData;
