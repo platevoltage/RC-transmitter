@@ -1,13 +1,13 @@
-#include "wireless.h"
+#include "Transmitter.h"
 
 
 
-uint8_t Wireless::broadcastAddress[6];
+uint8_t Transmitter::broadcastAddress[6];
 
-Wireless::Wireless() {}
-Wireless::~Wireless() {}
+Transmitter::Transmitter() {}
+Transmitter::~Transmitter() {}
 
-void Wireless::OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
+void Transmitter::OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
     Serial.print("Last Packet Send Status: ");
     if (status == ESP_NOW_SEND_SUCCESS) {
         Serial.println("Delivery Success");
@@ -16,7 +16,7 @@ void Wireless::OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status)
     }
 }
 
-void Wireless::init(const uint8_t *receiverMacAddress) {
+void Transmitter::init(const uint8_t *receiverMacAddress) {
 
     memcpy(broadcastAddress, receiverMacAddress, 6);
 
@@ -67,6 +67,6 @@ void Wireless::init(const uint8_t *receiverMacAddress) {
     Serial.println("Peer added successfully");
 }
 
-esp_err_t Wireless::sendData(struct_message data) {
+esp_err_t Transmitter::sendData(struct_message data) {
     return esp_now_send(broadcastAddress, (uint8_t *) &data, sizeof(data));
 }

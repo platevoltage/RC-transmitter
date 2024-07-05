@@ -1,5 +1,5 @@
-#ifndef WIRELESS_H
-#define WIRELESS_H
+#ifndef TRANSMITTER_H
+#define TRANSMITTER_H
 
 #include <esp_now.h>
 #include <WiFi.h>
@@ -10,11 +10,11 @@ typedef struct struct_message {
     int value;
 } struct_message;
 
-class Wireless {
+class Transmitter {
     
     public:
-        Wireless();
-        ~Wireless();
+        Transmitter();
+        ~Transmitter();
 
         void init(const uint8_t *receiverMacAddress);
         esp_err_t sendData(struct_message data);

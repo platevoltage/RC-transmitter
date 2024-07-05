@@ -1,17 +1,17 @@
-#include "wireless.h"
+#include "Transmitter.h"
 
 uint8_t receiverMacAddress[] = {0x84, 0xF7, 0x03, 0xF1, 0x1E, 0xDC};
-Wireless wireless;
+Transmitter transmitter;
 
 void setup() {
     // Initialize Serial Monitor
     Serial.begin(115200);
     pinMode(18, INPUT_PULLUP);
-    wireless.init(receiverMacAddress);
+    transmitter.init(receiverMacAddress);
 
 }
 
-// int value = 0xFF0000;
+
 int value = 0;
 void loop() {
     if (digitalRead(18)) {
@@ -27,7 +27,7 @@ void loop() {
     myData.value = value;
 
     // Send message
-    esp_err_t result = wireless.sendData(myData);
+    esp_err_t result = transmitter.sendData(myData);
     
 
     if (result == ESP_OK) {
