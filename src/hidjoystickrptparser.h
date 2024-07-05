@@ -15,7 +15,7 @@ public:
         virtual void OnButtonDn(uint8_t but_id);
         virtual void OnAcceleratorChange(uint8_t but_id);
         virtual void OnBrakeChange(uint8_t but_id);
-        virtual void OnWheelChange(uint8_t but_id);
+        virtual void OnWheelChange(uint8_t but_id, Transmitter *transmitter);
 };
 
 #define RPT_GEMEPAD_LEN		23
@@ -32,7 +32,6 @@ class JoystickReportParser : public HIDReportParser {
 
 public:
         JoystickReportParser(JoystickEvents *evt, Transmitter *transmitter);
-
         virtual void Parse(USBHID *hid, bool is_rpt_id, uint8_t len, uint8_t *buf);
 };
 
