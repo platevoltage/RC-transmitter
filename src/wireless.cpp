@@ -1,11 +1,13 @@
 #include "wireless.h"
 
-// Define the broadcast address
-// uint8_t broadcastAddress[] = {0x84, 0xF7, 0x03, 0xF1, 0x1E, 0xDC}; // Replace with actual receiver MAC address for testing
-uint8_t broadcastAddress[] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF}; // Broadcast address for general use/
 
-// Callback when data is sent
-void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
+
+uint8_t Wireless::broadcastAddress[6];
+
+Wireless::Wireless() {}
+Wireless::~Wireless() {}
+
+void Wireless::OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
     Serial.print("Last Packet Send Status: ");
     if (status == ESP_NOW_SEND_SUCCESS) {
         Serial.println("Delivery Success");
@@ -14,7 +16,10 @@ void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
     }
 }
 
-void initializeWireless() {
+void Wireless::init(const uint8_t *receiverMacAddress) {
+
+    memcpy(broadcastAddress, receiverMacAddress, 6);
+
     Serial.println("Initialize ESP-NOW");
     // Set device as a Wi-Fi Station
     WiFi.mode(WIFI_STA);
@@ -62,6 +67,6 @@ void initializeWireless() {
     Serial.println("Peer added successfully");
 }
 
-esp_err_t sendData(struct_message data) {
+esp_err_t Wireless::sendData(struct_message data) {
     return esp_now_send(broadcastAddress, (uint8_t *) &data, sizeof(data));
 }
