@@ -6,8 +6,8 @@
 #include <esp_wifi.h>
 
 typedef struct struct_message {
-    char text[32];
-    int value;
+    int steering;
+    int drive;
 } struct_message;
 
 class Transmitter {

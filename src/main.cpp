@@ -6,12 +6,13 @@
 
 #include "hidjoystickrptparser.h"
 
+// struct_message messageData;
 Transmitter transmitter;
 USB Usb;
 USBHub Hub(&Usb);
 HIDUniversal Hid(&Usb);
 JoystickEvents JoyEvents;
-JoystickReportParser Joy(&JoyEvents, &transmitter);
+JoystickReportParser Joy(&JoyEvents);
 
 uint8_t receiverMacAddress[] = {0x84, 0xF7, 0x03, 0xF1, 0x1E, 0xDC};
 
@@ -29,44 +30,28 @@ void setup() {
     if (usbInitCode == -1)
             Serial.println("OSC did not start.");
 
-    delay(200);
+    delay(2000);
 
     if (!Hid.SetReportParser(0, &Joy))
             ErrorMessage<uint8_t > (PSTR("SetReportParser"), 1);
+    delay(1000);
 }
 
 
-int value = 0;
+
 void loop() {
     Usb.Task();
-
-
-    //  if (digitalRead(18)) {
-    // //   value = 0x0000FF;
-    // value = 90;
-    // } else {
-    // //   value = 0xFF0000;
-    // value = 100;
-    // }
-    // // Sample message
-    // struct_message myData;
-    // strcpy(myData.text, "Hello");
-    // myData.value = value;
-
-    // // Send message
-    // esp_err_t result = transmitter.sendData(myData);
-    
-
-    // if (result == ESP_OK) {
-    //     Serial.println("Sent with success");
-    // } else {
-    //     Serial.println("Error sending the data");
-    // }
-
-    // Serial.print("button - ");
-    // Serial.println(digitalRead(18));
-
-    // delay(100); // Wait for 3 seconds before sending the next packet
+    // delay(100);
+    Serial.print("DRIVE - ");
+    Serial.print(messageData.drive);
+    Serial.print("   STEER - ");
+    Serial.print(messageData.steering);
+    esp_err_t result = transmitter.sendData(messageData);
+    if (result == ESP_OK) {
+        Serial.println("   Sent with success");
+    } else {
+        Serial.println("   Error sending the data");
+    }
 }
 
 

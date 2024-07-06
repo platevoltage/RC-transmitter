@@ -1,15 +1,15 @@
 #include "hidjoystickrptparser.h"
 
 
-JoystickReportParser::JoystickReportParser(JoystickEvents *evt, Transmitter *tran) :
+JoystickReportParser::JoystickReportParser(JoystickEvents *evt) :
 joyEvents(evt),
-transmitter(tran),
 oldAccelerator(0xDE),
 oldButtons(0) {
         for (uint8_t i = 0; i < RPT_GEMEPAD_LEN; i++)
                 oldPad[i] = 0xD;
 }
 
+struct_message messageData;
 
 void JoystickReportParser::Parse(USBHID *hid, bool is_rpt_id, uint8_t len, uint8_t *buf) {
 
@@ -56,7 +56,7 @@ void JoystickReportParser::Parse(USBHID *hid, bool is_rpt_id, uint8_t len, uint8
 
         uint8_t wheel = (buf[2]);
         if (wheel != oldWheel && joyEvents) {
-                joyEvents->OnWheelChange(wheel, transmitter);
+                joyEvents->OnWheelChange(wheel);
                 oldWheel = wheel;
         }
 
@@ -150,46 +150,38 @@ void JoystickEvents::OnButtonDn(uint8_t but_id) {
 }
 
 void JoystickEvents::OnAcceleratorChange(uint8_t but_id) {
-        Serial.print("Accelerator: ");
+        // Serial.print("Accelerator: ");
         if (but_id >= 128) but_id -= 128;
         else but_id+=128;
-        Serial.println(but_id, DEC); 
+        but_id*=.4;
+        but_id+=90;
+        // Serial.println(but_id, DEC); 
+        
+
+        messageData.drive = but_id;
+
         
 }
 
 void JoystickEvents::OnBrakeChange(uint8_t but_id) {
-        Serial.print("Brake: ");
+        // Serial.print("Brake: ");
         if (but_id >= 128) but_id -= 128;
         else but_id+=128;
-        Serial.println(but_id, DEC); 
+        but_id*=.1;
+        // Serial.println(but_id, DEC); 
+        messageData.drive -= but_id;
 }
 
-void JoystickEvents::OnWheelChange(uint8_t but_id, Transmitter *transmitter) {
-        Serial.print("Wheel: ");
-        // if (but_id >= 128) but_id -= 128;
-        // else but_id+=128;
-        // if (but_id >= 128) {
-        //         Serial.print(" (left) ");
-        //         but_id -= 128;
-        //         but_id %= 256;
-        // }
-        // else {
-        //         Serial.print(" (right) ");
-        // }
-        Serial.println(but_id, DEC); 
-            // Sample message
-                    struct_message myData;
-        strcpy(myData.text, "Hello");
-        myData.value = 100;
+void JoystickEvents::OnWheelChange(uint8_t but_id) {
+        // Serial.print("Wheel: ");
+        if (but_id >= 128) but_id -= 128;
+        else but_id+=128;
+        but_id*=.706;
 
-        // Send message
-        esp_err_t result = transmitter->sendData(myData);
+        // Serial.println(but_id, DEC); 
+
         
+        messageData.steering = but_id;
 
-        if (result == ESP_OK) {
-                Serial.println("Sent with success");
-        } else {
-                Serial.println("Error sending the data");
-        }
 
 }

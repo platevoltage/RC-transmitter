@@ -8,12 +8,12 @@ Transmitter::Transmitter() {}
 Transmitter::~Transmitter() {}
 
 void Transmitter::OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
-    Serial.print("Last Packet Send Status: ");
-    if (status == ESP_NOW_SEND_SUCCESS) {
-        Serial.println("Delivery Success");
-    } else {
-        Serial.println("Delivery Fail");
-    }
+    // Serial.print("Last Packet Send Status: ");
+    // if (status == ESP_NOW_SEND_SUCCESS) {
+    //     Serial.println("Delivery Success");
+    // } else {
+    //     Serial.println("Delivery Fail");
+    // }
 }
 
 void Transmitter::init(const uint8_t *receiverMacAddress) {
