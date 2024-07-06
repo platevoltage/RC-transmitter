@@ -7,10 +7,10 @@ struct GamePadEventData {
         uint8_t A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X;
 };
 
-extern struct_message messageData;
 
 class JoystickEvents {
 public:
+        struct_message message;
         virtual void OnGamePadChanged(const GamePadEventData *evt);
         virtual void OnHatSwitch(uint8_t hat);
         virtual void OnButtonUp(uint8_t but_id);

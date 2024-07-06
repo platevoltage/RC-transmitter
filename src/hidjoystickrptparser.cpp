@@ -158,7 +158,7 @@ void JoystickEvents::OnAcceleratorChange(uint8_t but_id) {
         // Serial.println(but_id, DEC); 
         
 
-        messageData.drive = but_id;
+        message.drive = but_id;
 
         
 }
@@ -169,7 +169,7 @@ void JoystickEvents::OnBrakeChange(uint8_t but_id) {
         else but_id+=128;
         but_id*=.1;
         // Serial.println(but_id, DEC); 
-        messageData.drive -= but_id;
+        message.drive -= but_id;
 }
 
 void JoystickEvents::OnWheelChange(uint8_t but_id) {
@@ -181,7 +181,7 @@ void JoystickEvents::OnWheelChange(uint8_t but_id) {
         // Serial.println(but_id, DEC); 
 
         
-        messageData.steering = but_id;
+        message.steering = but_id;
 
 
 }

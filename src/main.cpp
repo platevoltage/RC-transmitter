@@ -43,10 +43,10 @@ void loop() {
     Usb.Task();
     // delay(100);
     Serial.print("DRIVE - ");
-    Serial.print(messageData.drive);
+    Serial.print(JoyEvents.message.drive);
     Serial.print("   STEER - ");
-    Serial.print(messageData.steering);
-    esp_err_t result = transmitter.sendData(messageData);
+    Serial.print(JoyEvents.message.steering);
+    esp_err_t result = transmitter.sendData(JoyEvents.message);
     if (result == ESP_OK) {
         Serial.println("   Sent with success");
     } else {
