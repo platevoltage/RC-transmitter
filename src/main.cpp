@@ -42,11 +42,12 @@ void setup() {
 void loop() {
     Usb.Task();
     // delay(100);
+    struct_message message = JoyEvents.getParsedHIDReport();
     Serial.print("DRIVE - ");
-    Serial.print(JoyEvents.getParsedHIDReport().drive);
+    Serial.print(message.drive);
     Serial.print("   STEER - ");
-    Serial.print(JoyEvents.getParsedHIDReport().steering);
-    esp_err_t result = transmitter.sendData(JoyEvents.getParsedHIDReport());
+    Serial.print(message.steering);
+    esp_err_t result = transmitter.sendData(message);
     if (result == ESP_OK) {
         Serial.println("   Sent with success");
     } else {
