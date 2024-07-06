@@ -185,3 +185,8 @@ void JoystickEvents::OnWheelChange(uint8_t but_id) {
 
 
 }
+
+struct_message JoystickEvents::getParsedHIDReport() {
+        
+        return messageData;
+}

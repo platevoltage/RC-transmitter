@@ -9,15 +9,18 @@ struct GamePadEventData {
 
 
 class JoystickEvents {
-public:
-        struct_message message;
-        virtual void OnGamePadChanged(const GamePadEventData *evt);
-        virtual void OnHatSwitch(uint8_t hat);
-        virtual void OnButtonUp(uint8_t but_id);
-        virtual void OnButtonDn(uint8_t but_id);
-        virtual void OnAcceleratorChange(uint8_t but_id);
-        virtual void OnBrakeChange(uint8_t but_id);
-        virtual void OnWheelChange(uint8_t but_id);
+        public:
+                virtual void OnGamePadChanged(const GamePadEventData *evt);
+                virtual void OnHatSwitch(uint8_t hat);
+                virtual void OnButtonUp(uint8_t but_id);
+                virtual void OnButtonDn(uint8_t but_id);
+                virtual void OnAcceleratorChange(uint8_t but_id);
+                virtual void OnBrakeChange(uint8_t but_id);
+                virtual void OnWheelChange(uint8_t but_id);
+                struct_message getParsedHIDReport();
+        private:
+                struct_message message;
+
 };
 
 #define RPT_GEMEPAD_LEN		23

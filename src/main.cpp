@@ -6,6 +6,7 @@
 
 #include "hidjoystickrptparser.h"
 
+uint8_t receiverMacAddress[] = {0x84, 0xF7, 0x03, 0xF1, 0x1E, 0xDC};
 // struct_message messageData;
 Transmitter transmitter;
 USB Usb;
@@ -14,7 +15,6 @@ HIDUniversal Hid(&Usb);
 JoystickEvents JoyEvents;
 JoystickReportParser Joy(&JoyEvents);
 
-uint8_t receiverMacAddress[] = {0x84, 0xF7, 0x03, 0xF1, 0x1E, 0xDC};
 
 void setup() {
    
@@ -43,10 +43,10 @@ void loop() {
     Usb.Task();
     // delay(100);
     Serial.print("DRIVE - ");
-    Serial.print(JoyEvents.message.drive);
+    Serial.print(JoyEvents.getParsedHIDReport().drive);
     Serial.print("   STEER - ");
-    Serial.print(JoyEvents.message.steering);
-    esp_err_t result = transmitter.sendData(JoyEvents.message);
+    Serial.print(JoyEvents.getParsedHIDReport().steering);
+    esp_err_t result = transmitter.sendData(JoyEvents.getParsedHIDReport());
     if (result == ESP_OK) {
         Serial.println("   Sent with success");
     } else {
