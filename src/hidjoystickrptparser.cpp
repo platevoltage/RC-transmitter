@@ -158,7 +158,7 @@ void JoystickEvents::OnAcceleratorChange(uint8_t but_id) {
         // Serial.println(but_id, DEC); 
         
 
-        messageData.drive = but_id;
+        messageData.accelerator = but_id;
 
         
 }
@@ -169,7 +169,7 @@ void JoystickEvents::OnBrakeChange(uint8_t but_id) {
         else but_id+=128;
         but_id*=.1;
         // Serial.println(but_id, DEC); 
-        messageData.drive -= but_id;
+        messageData.brake = but_id;
 }
 
 void JoystickEvents::OnWheelChange(uint8_t but_id) {
@@ -186,6 +186,7 @@ void JoystickEvents::OnWheelChange(uint8_t but_id) {
 
 }
 
-struct_message JoystickEvents::getParsedHIDReport() const {
+struct_message JoystickEvents::getParsedHIDReport() {
+        messageData.drive = messageData.accelerator - messageData.brake;
         return messageData;
 }

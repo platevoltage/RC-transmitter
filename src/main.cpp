@@ -43,7 +43,11 @@ void loop() {
     Usb.Task();
     // delay(100);
     struct_message message = JoyEvents.getParsedHIDReport();
-    Serial.print("DRIVE - ");
+    Serial.print("ACCELERATOR - ");
+    Serial.print(message.accelerator);
+    Serial.print("   BRAKE - ");
+    Serial.print(message.brake);
+    Serial.print("   DRIVE - ");
     Serial.print(message.drive);
     Serial.print("   STEER - ");
     Serial.print(message.steering);

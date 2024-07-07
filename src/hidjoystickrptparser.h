@@ -17,7 +17,7 @@ class JoystickEvents {
                 virtual void OnAcceleratorChange(uint8_t but_id);
                 virtual void OnBrakeChange(uint8_t but_id);
                 virtual void OnWheelChange(uint8_t but_id);
-                struct_message getParsedHIDReport() const;
+                struct_message getParsedHIDReport();
         private:
                 struct_message messageData;
 

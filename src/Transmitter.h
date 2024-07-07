@@ -8,6 +8,8 @@
 typedef struct struct_message {
     int steering;
     int drive;
+    int brake;
+    int accelerator;
 } struct_message;
 
 class Transmitter {
