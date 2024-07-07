@@ -69,6 +69,20 @@ void Transmitter::init(const uint8_t *receiverMacAddress) {
     Serial.println("Peer added successfully");
 }
 
-esp_err_t Transmitter::sendData(struct_message data) {
-    return esp_now_send(broadcastAddress, (uint8_t *) &data, sizeof(data));
+esp_err_t Transmitter::sendData(struct_message message) {
+    esp_err_t result = esp_now_send(broadcastAddress, (uint8_t *) &message, sizeof(message));
+    Serial.print("ACCELERATOR - ");
+    Serial.print(message.accelerator);
+    Serial.print("   BRAKE - ");
+    Serial.print(message.brake);
+    Serial.print("   DRIVE - ");
+    Serial.print(message.drive);
+    Serial.print("   STEER - ");
+    Serial.print(message.steering);
+    if (result == ESP_OK) {
+        Serial.println("   Sent with success");
+    } else {
+        Serial.println("   Error sending the data");
+    }
+    return result;
 }
