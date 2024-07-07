@@ -154,7 +154,6 @@ void JoystickEvents::OnAcceleratorChange(uint8_t but_id) {
         if (but_id >= 128) but_id -= 128;
         else but_id+=128;
         but_id*=.4;
-        but_id+=90;
         // Serial.println(but_id, DEC); 
         
 
@@ -167,7 +166,7 @@ void JoystickEvents::OnBrakeChange(uint8_t but_id) {
         // Serial.print("Brake: ");
         if (but_id >= 128) but_id -= 128;
         else but_id+=128;
-        but_id*=.1;
+        but_id*=.4;
         // Serial.println(but_id, DEC); 
         messageData.brake = but_id;
 }
@@ -187,6 +186,9 @@ void JoystickEvents::OnWheelChange(uint8_t but_id) {
 }
 
 struct_message JoystickEvents::getParsedHIDReport() {
-        messageData.drive = messageData.accelerator - messageData.brake;
+        messageData.drive = 90 + messageData.accelerator - messageData.brake;
+        if (messageData.drive < 0) {
+                messageData.drive = 0;
+        }
         return messageData;
 }

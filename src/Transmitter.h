@@ -6,10 +6,10 @@
 #include <esp_wifi.h>
 
 typedef struct struct_message {
-    int steering;
-    int drive;
-    int brake;
     int accelerator;
+    int brake;
+    int drive;
+    int steering;
 } struct_message;
 
 class Transmitter {
