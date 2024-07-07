@@ -166,7 +166,7 @@ void JoystickEvents::OnBrakeChange(uint8_t but_id) {
         // Serial.print("Brake: ");
         if (but_id >= 128) but_id -= 128;
         else but_id+=128;
-        but_id*=.4;
+        but_id*=.15;
         // Serial.println(but_id, DEC); 
         messageData.brake = but_id;
 }
