@@ -94,8 +94,12 @@ void loop() {
     u8g2.drawStr(50,60, AStatus.c_str());
 
     String reverseStatus = "";
-    reverseStatus.concat(JoyEvents.reverseButton);
+    reverseStatus.concat(JoyEvents.reverse);
     u8g2.drawStr(80,52, reverseStatus.c_str());
+
+    String startStatus = "";
+    startStatus.concat(JoyEvents.start);
+    u8g2.drawStr(92,52, startStatus.c_str());
 
     if (Usb.getUsbTaskState() != 144) {
 

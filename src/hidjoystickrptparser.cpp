@@ -196,8 +196,8 @@ void JoystickEvents::OnRightButtonUp(uint8_t but_id) {
         switch (but_id) {
                 // case 1: A = false; break;
                 // case 2: B = false; break;
-                case 3: reverseButton = false; break;
-                // case 4: Y = false; break;
+                case 3: reverse = false; break;
+                case 4: start = false; break;
                 // case 5: up = false; break;
                 // case 6: right = false; break;
                 // case 7: down = false; break;
@@ -211,8 +211,8 @@ void JoystickEvents::OnRightButtonDn(uint8_t but_id) {
         switch (but_id) {
                 // case 1: A = true; break;
                 // case 2: B = true; break;
-                case 3: reverseButton = true; break;
-                // case 4: Y = true; break;
+                case 3: reverse = true; break;
+                case 4: start = true; break;
                 // case 5: up = true; break;
                 // case 6: right = true; break;
                 // case 7: down = true; break;

@@ -33,7 +33,8 @@ class JoystickEvents {
                 bool X;
                 bool Y;
 
-                bool reverseButton;
+                bool reverse;
+                bool start;
         private:
                 struct_message messageData;
 
