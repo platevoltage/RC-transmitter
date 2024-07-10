@@ -21,7 +21,7 @@ void setup() {
     // Initialize Serial Monitor
     Serial.begin(115200);
     // pinMode(18, INPUT_PULLUP);
-    delay(3000);
+    // delay(3000);
     transmitter.init(receiverMacAddress);
 
     Serial.println("start");
@@ -30,11 +30,11 @@ void setup() {
     if (usbInitCode == -1)
             Serial.println("OSC did not start.");
 
-    delay(2000);
+    // delay(2000);
 
     if (!Hid.SetReportParser(0, &Joy))
             ErrorMessage<uint8_t > (PSTR("SetReportParser"), 1);
-    delay(1000);
+    // delay(1000);
 }
 
 
@@ -45,11 +45,38 @@ void loop() {
     struct_message message = JoyEvents.getParsedHIDReport();
 
     transmitter.sendData(message);
-    u8g2.clearBuffer();					// clear the internal memory
-    u8g2.setFont(u8g2_font_helvR14_tr);	// choose a suitable font
-    u8g2.drawStr(0,16,"Hello World!");	// write something to the internal memory
-    u8g2.sendBuffer();					// transfer internal memory to the display
-    delay(1000);  
+    u8g2.clearBuffer();
+    u8g2.setFont(u8g2_font_helvR12_tr);
+    String steer = "Steer: ";
+    steer.concat(message.steering);
+    u8g2.drawStr(0,14, steer.c_str());
+    String drive = "Drive: ";
+    drive.concat(message.drive);
+    u8g2.drawStr(0,28, drive.c_str());
+
+    // String usbStatus = "";
+    // usbStatus.concat(Usb.getUsbTaskState());
+    // u8g2.drawStr(0,42, usbStatus.c_str());
+    int strobe = 0;
+    if (Usb.getUsbTaskState() != 144) {
+
+      
+        u8g2.setDrawColor(0);
+        u8g2.drawBox(0,0,128,64);
+        u8g2.setDrawColor(1);
+
+        
+        u8g2.drawBox(0,18,124,30);
+        u8g2.drawFrame(0,18,124,30);
+        u8g2.setDrawColor(0);
+        u8g2.drawBox(4,22,124,32);
+        u8g2.setDrawColor(1);
+        u8g2.drawFrame(4,22,124,32);
+        u8g2.setFont(u8g2_font_helvR12_tr);
+        u8g2.drawStr(8,42, "Connect Wheel!");
+    }
+    u8g2.sendBuffer();
+    // delay(1000);  
 }
 
 
