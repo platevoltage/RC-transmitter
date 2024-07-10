@@ -60,25 +60,25 @@ void JoystickReportParser::Parse(USBHID *hid, bool is_rpt_id, uint8_t len, uint8
                 oldWheel = wheel;
         }
 
-        // uint16_t buttons = (0x0000 | buf[6]);
-        // buttons <<= 4;
-        // buttons |= (buf[5] >> 4);
-        // uint16_t changes = (buttons ^ oldButtons);
+        uint16_t buttons = (0x0000 | buf[18]);
+        buttons <<= 4;
+        buttons |= (buf[17] >> 4);
+        uint16_t changes = (buttons ^ oldButtons);
 
-        // // Calling Button Event Handler for every button changed
-        // if (changes) {
-        //         for (uint8_t i = 0; i < 0x0C; i++) {
-        //                 uint16_t mask = (0x0001 << i);
+        // Calling Button Event Handler for every button changed
+        if (changes) {
+                for (uint8_t i = 0; i < 0x0C; i++) {
+                        uint16_t mask = (0x0001 << i);
 
-        //                 if (((mask & changes) > 0) && joyEvents) {
-        //                         if ((buttons & mask) > 0)
-        //                                 joyEvents->OnButtonDn(i + 1);
-        //                         else
-        //                                 joyEvents->OnButtonUp(i + 1);
-        //                 }
-        //         }
-        //         oldButtons = buttons;
-        // }
+                        if (((mask & changes) > 0) && joyEvents) {
+                                if ((buttons & mask) > 0)
+                                        joyEvents->OnButtonDn(i + 1);
+                                else
+                                        joyEvents->OnButtonUp(i + 1);
+                        }
+                }
+                oldButtons = buttons;
+        }
 }
 
 void JoystickEvents::OnGamePadChanged(const GamePadEventData *evt) {
@@ -140,13 +140,33 @@ void JoystickEvents::OnHatSwitch(uint8_t hat) {
 }
 
 void JoystickEvents::OnButtonUp(uint8_t but_id) {
-        // Serial.print("Up: ");
-        // Serial.println(but_id, DEC);
+        Serial.print("Up: ");
+        Serial.println(but_id, DEC);
+        switch (but_id) {
+                case 1: A = false; break;
+                case 2: B = false; break;
+                case 3: X = false; break;
+                case 4: Y = false; break;
+                case 5: up = false; break;
+                case 6: right = false; break;
+                case 7: down = false; break;
+                case 8: left = false; break;
+        }
 }
 
 void JoystickEvents::OnButtonDn(uint8_t but_id) {
-        // Serial.print("Dn: ");
-        // Serial.println(but_id, DEC);
+        Serial.print("Dn: ");
+        Serial.println(but_id, DEC);
+        switch (but_id) {
+                case 1: A = true; break;
+                case 2: B = true; break;
+                case 3: X = true; break;
+                case 4: Y = true; break;
+                case 5: up = true; break;
+                case 6: right = true; break;
+                case 7: down = true; break;
+                case 8: left = true; break;
+        }
 }
 
 void JoystickEvents::OnAcceleratorChange(uint8_t but_id) {

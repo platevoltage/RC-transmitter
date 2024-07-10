@@ -3,6 +3,9 @@
 
 #include <usbhid.h>
 #include "Transmitter.h"
+
+
+
 struct GamePadEventData {
         uint8_t A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X;
 };
@@ -18,6 +21,15 @@ class JoystickEvents {
                 virtual void OnBrakeChange(uint8_t but_id);
                 virtual void OnWheelChange(uint8_t but_id);
                 struct_message getParsedHIDReport();
+                bool up;
+                bool down;
+                bool left;
+                bool right;
+
+                bool A;
+                bool B;
+                bool X;
+                bool Y;
         private:
                 struct_message messageData;
 

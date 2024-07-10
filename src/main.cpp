@@ -16,6 +16,16 @@ JoystickEvents JoyEvents;
 JoystickReportParser Joy(&JoyEvents);
 U8G2_SSD1306_128X64_NONAME_F_4W_HW_SPI u8g2(U8G2_R0, /* cs=*/ 39, /* dc=*/ 37, /* reset=*/ 35);
 
+// bool up;
+// bool down;
+// bool left;
+// bool right;
+
+// bool A;
+// bool B;
+// bool X;
+// bool Y;
+
 void setup() {
     u8g2.begin();
     // Initialize Serial Monitor
@@ -57,7 +67,32 @@ void loop() {
     // String usbStatus = "";
     // usbStatus.concat(Usb.getUsbTaskState());
     // u8g2.drawStr(0,42, usbStatus.c_str());
-    int strobe = 0;
+    String upStatus = "";
+    upStatus.concat(JoyEvents.up);
+    u8g2.drawStr(10,42, upStatus.c_str());
+    String leftStatus = "";
+    leftStatus.concat(JoyEvents.left);
+    u8g2.drawStr(0,52, leftStatus.c_str());
+    String rightStatus = "";
+    rightStatus.concat(JoyEvents.right);
+    u8g2.drawStr(20,52, rightStatus.c_str());
+    String downStatus = "";
+    downStatus.concat(JoyEvents.down);
+    u8g2.drawStr(10,60, downStatus.c_str());
+
+    String YStatus = "";
+    YStatus.concat(JoyEvents.Y);
+    u8g2.drawStr(50,42, YStatus.c_str());
+    String XStatus = "";
+    XStatus.concat(JoyEvents.X);
+    u8g2.drawStr(40,52, XStatus.c_str());
+    String BStatus = "";
+    BStatus.concat(JoyEvents.B);
+    u8g2.drawStr(60,52, BStatus.c_str());
+    String AStatus = "";
+    AStatus.concat(JoyEvents.A);
+    u8g2.drawStr(50,60, AStatus.c_str());
+
     if (Usb.getUsbTaskState() != 144) {
 
       
