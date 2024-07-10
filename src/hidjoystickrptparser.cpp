@@ -4,7 +4,7 @@
 JoystickReportParser::JoystickReportParser(JoystickEvents *evt) :
 joyEvents(evt),
 oldAccelerator(0xDE),
-oldButtons(0) {
+oldStandardButtons(0) {
         for (uint8_t i = 0; i < RPT_GEMEPAD_LEN; i++)
                 oldPad[i] = 0xD;
 }
@@ -60,24 +60,45 @@ void JoystickReportParser::Parse(USBHID *hid, bool is_rpt_id, uint8_t len, uint8
                 oldWheel = wheel;
         }
 
-        uint16_t buttons = (0x0000 | buf[18]);
-        buttons <<= 4;
-        buttons |= (buf[17] >> 4);
-        uint16_t changes = (buttons ^ oldButtons);
+        uint16_t standardButtons = (0x0000 | buf[18]);
+        standardButtons <<= 4;
+        standardButtons |= (buf[17] >> 4);
+        uint16_t standardChanges = (standardButtons ^ oldStandardButtons);
 
         // Calling Button Event Handler for every button changed
-        if (changes) {
+        if (standardChanges) {
                 for (uint8_t i = 0; i < 0x0C; i++) {
                         uint16_t mask = (0x0001 << i);
 
-                        if (((mask & changes) > 0) && joyEvents) {
-                                if ((buttons & mask) > 0)
+                        if (((mask & standardChanges) > 0) && joyEvents) {
+                                if ((standardButtons & mask) > 0)
                                         joyEvents->OnButtonDn(i + 1);
                                 else
                                         joyEvents->OnButtonUp(i + 1);
                         }
                 }
-                oldButtons = buttons;
+                oldStandardButtons = standardButtons;
+        }
+
+
+        uint16_t rightButtons = (0x0000 | buf[22]);
+        rightButtons <<= 4;
+        rightButtons |= (buf[21] >> 4);
+        uint16_t rightChanges = (rightButtons ^ oldRightButtons);
+
+        // Calling Button Event Handler for every button changed
+        if (rightChanges) {
+                for (uint8_t i = 0; i < 0x0C; i++) {
+                        uint16_t mask = (0x0001 << i);
+
+                        if (((mask & rightChanges) > 0) && joyEvents) {
+                                if ((rightButtons & mask) > 0)
+                                        joyEvents->OnRightButtonDn(i + 1);
+                                else
+                                        joyEvents->OnRightButtonUp(i + 1);
+                        }
+                }
+                oldRightButtons = rightButtons;
         }
 }
 
@@ -166,6 +187,36 @@ void JoystickEvents::OnButtonDn(uint8_t but_id) {
                 case 6: right = true; break;
                 case 7: down = true; break;
                 case 8: left = true; break;
+        }
+}
+
+void JoystickEvents::OnRightButtonUp(uint8_t but_id) {
+        Serial.print("Up: ");
+        Serial.println(but_id, DEC);
+        switch (but_id) {
+                // case 1: A = false; break;
+                // case 2: B = false; break;
+                case 3: reverseButton = false; break;
+                // case 4: Y = false; break;
+                // case 5: up = false; break;
+                // case 6: right = false; break;
+                // case 7: down = false; break;
+                // case 8: left = false; break;
+        }
+}
+
+void JoystickEvents::OnRightButtonDn(uint8_t but_id) {
+        Serial.print("Dn: ");
+        Serial.println(but_id, DEC);
+        switch (but_id) {
+                // case 1: A = true; break;
+                // case 2: B = true; break;
+                case 3: reverseButton = true; break;
+                // case 4: Y = true; break;
+                // case 5: up = true; break;
+                // case 6: right = true; break;
+                // case 7: down = true; break;
+                // case 8: left = true; break;
         }
 }
 

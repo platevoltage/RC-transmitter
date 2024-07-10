@@ -17,6 +17,8 @@ class JoystickEvents {
                 virtual void OnHatSwitch(uint8_t hat);
                 virtual void OnButtonUp(uint8_t but_id);
                 virtual void OnButtonDn(uint8_t but_id);
+                virtual void OnRightButtonUp(uint8_t but_id);
+                virtual void OnRightButtonDn(uint8_t but_id);
                 virtual void OnAcceleratorChange(uint8_t but_id);
                 virtual void OnBrakeChange(uint8_t but_id);
                 virtual void OnWheelChange(uint8_t but_id);
@@ -30,6 +32,8 @@ class JoystickEvents {
                 bool B;
                 bool X;
                 bool Y;
+
+                bool reverseButton;
         private:
                 struct_message messageData;
 
@@ -43,7 +47,8 @@ class JoystickReportParser : public HIDReportParser {
         uint8_t oldAccelerator;
         uint8_t oldBrake;
         uint8_t oldWheel;
-        uint16_t oldButtons;
+        uint16_t oldStandardButtons;
+        uint16_t oldRightButtons;
 
 public:
         JoystickReportParser(JoystickEvents *evt);
