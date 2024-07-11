@@ -118,9 +118,12 @@ void loop() {
         u8g2.setFont(u8g2_font_helvB10_tr);
         // u8g2.drawStr(8,42, "Connect Wheel!");
         u8g2.drawButtonUTF8(62, 30, U8G2_BTN_SHADOW1|U8G2_BTN_HCENTER|U8G2_BTN_BW2, 34,  2,  2, "Connect Wheel!" );
+        u8g2.drawStr(60,52, String(Usb.getUsbTaskState()).c_str());
+
     }
     u8g2.sendBuffer();
     // delay(1000);  
+    Serial.println(esp_get_free_heap_size());
 }
 
 

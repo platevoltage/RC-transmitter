@@ -257,9 +257,23 @@ void JoystickEvents::OnWheelChange(uint8_t but_id) {
 }
 
 struct_message JoystickEvents::getParsedHIDReport() {
-        messageData.drive = 90 + messageData.accelerator - messageData.brake;
-        if (messageData.drive < 0) {
-                messageData.drive = 0;
+        if (reverse) {
+                messageData.drive = 90 - messageData.accelerator + messageData.brake;
+                if (messageData.drive < 0) {
+                        messageData.drive = 0;
+                }
+                if (messageData.drive > 90) {
+                        messageData.drive = 90;
+                }
+        }
+        else {
+                messageData.drive = 90 + messageData.accelerator - messageData.brake;
+                if (messageData.drive < 0) {
+                        messageData.drive = 0;
+                }
+                if (messageData.drive > 180) {
+                        messageData.drive = 180;
+                }
         }
         return messageData;
 }
