@@ -4557,7 +4557,7 @@
 			(uuid "7f1d9046-604b-4bd3-8a6b-cf51b02be7fd")
 		)
 		(fp_text user "${REFERENCE}"
-			(at -0.015 3.775 360)
+			(at -0.015 3.775 0)
 			(layer "F.Fab")
 			(uuid "19ef0926-a02d-419c-8252-e92bd3b4cf9c")
 			(effects
@@ -4950,7 +4950,7 @@
 		(descr "USB type A, Horizontal, https://www.molex.com/pdm_docs/sd/676433910_sd.pdf")
 		(tags "USB_A Female Connector receptacle")
 		(property "Reference" "J2"
-			(at 3.5 -3.19 360)
+			(at 3.5 -3.19 0)
 			(layer "F.SilkS")
 			(uuid "e09fe245-8380-40b4-9796-625daefd04aa")
 			(effects
@@ -4961,7 +4961,7 @@
 			)
 		)
 		(property "Value" "USB_A"
-			(at 3.5 14.5 360)
+			(at 3.5 14.5 0)
 			(layer "F.Fab")
 			(uuid "dab47855-ad98-4d06-8b55-9cb94590e00c")
 			(effects
@@ -5369,7 +5369,7 @@
 			)
 		)
 		(fp_text user "${REFERENCE}"
-			(at 3.5 3.7 360)
+			(at 3.5 3.7 0)
 			(layer "F.Fab")
 			(uuid "97d8ac6d-132b-4516-ac11-954ed9179180")
 			(effects
