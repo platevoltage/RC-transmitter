@@ -14,7 +14,7 @@ USBHub Hub(&Usb);
 HIDUniversal Hid(&Usb);
 JoystickEvents JoyEvents;
 JoystickReportParser Joy(&JoyEvents);
-U8G2_SSD1306_128X64_NONAME_F_4W_HW_SPI u8g2(U8G2_R0, /* cs=*/ 39, /* dc=*/ 37, /* reset=*/ 35);
+U8G2_SSD1322_NHD_256X64_F_4W_HW_SPI u8g2(U8G2_R0, /* cs=*/ 39, /* dc=*/ 37, /* reset=*/ 35);
 
 // bool up;
 // bool down;
